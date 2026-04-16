@@ -112,17 +112,23 @@ export default function ConfigStep() {
                     className={cn(
                       "p-4 rounded-2xl border transition-all text-left relative overflow-hidden group",
                       selectedRes === res.id 
-                        ? "bg-white/50 border-primary shadow-sm" 
-                        : "bg-white/20 border-white/30 hover:bg-white/40"
+                        ? "bg-primary text-white border-transparent shadow-lg" 
+                        : "bg-white/30 border-white/50 hover:bg-white/50 text-on-surface"
                     )}
                   >
                     {res.recommended && (
-                      <div className="absolute top-0 right-0 bg-primary text-white text-[8px] px-2 py-0.5 rounded-bl-lg font-bold">
+                      <div className={cn(
+                        "absolute top-0 right-0 text-[8px] px-2 py-0.5 rounded-bl-lg font-bold",
+                        selectedRes === res.id ? "bg-white text-primary" : "bg-primary text-white"
+                      )}>
                         推荐
                       </div>
                     )}
                     <div className="font-bold text-sm">{res.label}</div>
-                    <div className="text-[10px] text-on-surface-variant mt-1">{res.res}</div>
+                    <div className={cn(
+                      "text-[10px] mt-1",
+                      selectedRes === res.id ? "text-white/80" : "text-on-surface-variant"
+                    )}>{res.res}</div>
                   </button>
                 ))}
               </div>
