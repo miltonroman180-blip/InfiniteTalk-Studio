@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import StepIndicator from './components/StepIndicator';
-import MaterialStep from './components/steps/MaterialStep';
-import VoiceStep from './components/steps/VoiceStep';
-import ConfigStep from './components/steps/ConfigStep';
-import GenerateStep from './components/steps/GenerateStep';
-import PublishStep from './components/steps/PublishStep';
-import { motion, AnimatePresence } from 'motion/react';
-import { Step } from './types';
+'use client';
 
-export default function App() {
+import { useState } from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import StepIndicator from '../components/StepIndicator';
+import MaterialStep from '../components/steps/MaterialStep';
+import VoiceStep from '../components/steps/VoiceStep';
+import ConfigStep from '../components/steps/ConfigStep';
+import GenerateStep from '../components/steps/GenerateStep';
+import PublishStep from '../components/steps/PublishStep';
+import { motion, AnimatePresence } from 'motion/react';
+import { Step } from '../types';
+
+export default function Home() {
   const [currentStep, setCurrentStep] = useState<Step>(Step.Material);
   const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
 

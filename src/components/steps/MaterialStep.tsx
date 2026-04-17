@@ -1,6 +1,21 @@
+import { useState, useRef } from 'react';
 import { Video, CloudUpload, Trash2, Plus, FileText, Sparkles, RefreshCw, Bold, Italic, Underline, AlignLeft, AlignCenter } from 'lucide-react';
 
 export default function MaterialStep() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      console.log('Selected file:', file.name);
+      // Logic for handling the file would go here
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Left Column: Video Source */}
@@ -11,6 +26,7 @@ export default function MaterialStep() {
         </div>
 
         <div className="glass-panel p-6 rounded-3xl space-y-6">
+          {/* ... existing code ... */}
           {/* URL Input */}
           <div className="space-y-2">
             <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">粘贴视频链接</label>
@@ -33,7 +49,17 @@ export default function MaterialStep() {
           </div>
 
           {/* Drag & Drop */}
-          <div className="border-2 border-dashed border-black/10 rounded-2xl p-8 flex flex-col items-center justify-center space-y-4 hover:border-primary/40 hover:bg-white/40 transition-all cursor-pointer group">
+          <div 
+            onClick={handleUploadClick}
+            className="border-2 border-dashed border-black/10 rounded-2xl p-8 flex flex-col items-center justify-center space-y-4 hover:border-primary/40 hover:bg-white/40 transition-all cursor-pointer group"
+          >
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              className="hidden" 
+              accept="video/*" 
+              onChange={handleFileChange}
+            />
             <div className="w-16 h-16 rounded-2xl bg-white/30 flex items-center justify-center group-hover:scale-110 transition-transform">
               <CloudUpload className="text-primary" size={32} />
             </div>
@@ -118,7 +144,11 @@ export default function MaterialStep() {
           
           {/* Editor Body */}
           <div className="flex-grow p-8 overflow-y-auto custom-scrollbar">
-            <div className="font-body text-lg leading-relaxed text-on-surface/90 outline-none min-h-full" contentEditable="true">
+            <div 
+              className="font-body text-lg leading-relaxed text-on-surface/90 outline-none min-h-full" 
+              contentEditable="true"
+              suppressContentEditableWarning={true}
+            >
               <p className="mb-6"><span className="text-primary font-bold"># 开场片段</span></p>
               <p className="mb-4">欢迎来到未来的创意工坊。在这里，我们不仅仅是在剪辑视频，而是在编织梦境。人工智能正在重新定义视觉叙事的边界。</p>
               <p className="mb-6"><span className="text-primary font-bold"># 核心内容</span></p>

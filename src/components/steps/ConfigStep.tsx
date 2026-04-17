@@ -1,6 +1,6 @@
 import { Maximize, Music, Sliders, UserCheck, Subtitles, Info, Trash2, Lock, Plus, Video, Upload, FileVideo, Rocket } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const RESOLUTIONS = [
   { id: '1', label: '480P 标清', res: '854 × 480', ratio: '16:9 / 9:16' },
@@ -27,6 +27,19 @@ export default function ConfigStep() {
   const [selectedRatio, setSelectedRatio] = useState('landscape');
   const [selectedFps, setSelectedFps] = useState('30 FPS');
   const [hasUploadedVideo, setHasUploadedVideo] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setHasUploadedVideo(true);
+      console.log('Selected original video:', file.name);
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -40,9 +53,16 @@ export default function ConfigStep() {
           
           {!hasUploadedVideo ? (
             <div 
-              onClick={() => setHasUploadedVideo(true)}
+              onClick={handleUploadClick}
               className="border-2 border-dashed border-black/10 rounded-2xl p-10 flex flex-col items-center justify-center gap-4 hover:bg-white/40 hover:border-primary/30 transition-all cursor-pointer group"
             >
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                className="hidden" 
+                accept="video/*" 
+                onChange={handleFileChange}
+              />
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
                 <Upload size={32} />
               </div>
